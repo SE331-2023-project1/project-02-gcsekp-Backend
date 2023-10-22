@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import se331.rest.lab.dto.AdvisorDTO;
+import se331.rest.lab.dto.OwnStudentDTO;
+import se331.rest.lab.dto.OwnsAdvisorDTO;
 import se331.rest.lab.dto.StudentDTO;
 import se331.rest.lab.entity.Advisor;
 import se331.rest.lab.entity.Student;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-22T17:26:52+0700",
+    date = "2023-10-22T17:37:55+0700",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.4.1 (Amazon.com Inc.)"
 )
 public class LabMapperImpl implements LabMapper {
@@ -76,5 +78,38 @@ public class LabMapperImpl implements LabMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public OwnsAdvisorDTO getAdvisorForStudent(Advisor advisor) {
+        if ( advisor == null ) {
+            return null;
+        }
+
+        OwnsAdvisorDTO ownsAdvisorDTO = new OwnsAdvisorDTO();
+
+        ownsAdvisorDTO.setDepartment( advisor.getDepartment() );
+        ownsAdvisorDTO.setId( advisor.getId() );
+        ownsAdvisorDTO.setName( advisor.getName() );
+        ownsAdvisorDTO.setPosition( advisor.getPosition() );
+        ownsAdvisorDTO.setSurname( advisor.getSurname() );
+
+        return ownsAdvisorDTO;
+    }
+
+    @Override
+    public OwnStudentDTO getStudentForAdvisor(Student student) {
+        if ( student == null ) {
+            return null;
+        }
+
+        OwnStudentDTO ownStudentDTO = new OwnStudentDTO();
+
+        ownStudentDTO.setId( student.getId() );
+        ownStudentDTO.setName( student.getName() );
+        ownStudentDTO.setStudentID( student.getStudentID() );
+        ownStudentDTO.setSurname( student.getSurname() );
+
+        return ownStudentDTO;
     }
 }

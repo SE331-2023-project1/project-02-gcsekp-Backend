@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import se331.rest.lab.dto.AdvisorDTO;
+import se331.rest.lab.dto.OwnStudentDTO;
+import se331.rest.lab.dto.OwnsAdvisorDTO;
 import se331.rest.lab.dto.StudentDTO;
 import se331.rest.lab.entity.Advisor;
 import se331.rest.lab.entity.Student;
@@ -21,4 +23,8 @@ public interface LabMapper {
     AdvisorDTO getAdvisorDto(Advisor advisor);
 
     List<AdvisorDTO> getAdvisorDto(List<Advisor> advisors);
+
+    OwnsAdvisorDTO getAdvisorForStudent(Advisor advisor);
+
+    OwnStudentDTO getStudentForAdvisor(Student student);
 }
