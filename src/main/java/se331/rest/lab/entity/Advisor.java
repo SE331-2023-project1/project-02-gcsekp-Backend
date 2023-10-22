@@ -29,6 +29,7 @@ public class Advisor {
     String position;
     String image;
     String department;
+    String advisorID;
     @OneToMany
     @Builder.Default
     List<Student> studentList = new ArrayList<>();
