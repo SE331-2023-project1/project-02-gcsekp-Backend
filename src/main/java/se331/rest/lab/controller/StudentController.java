@@ -59,13 +59,16 @@ public class StudentController {
 
     @PutMapping("/students/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody Student updateStudent) {
-        Student existingStudent = studentService.getStudent(id);
+        Student existingStudent = studentService.getStudentById(id);
         if (existingStudent != null) {
             if (updateStudent.getName() != null) {
                 existingStudent.setName(updateStudent.getName());
             }
             if (updateStudent.getSurname() != null) {
                 existingStudent.setSurname(updateStudent.getSurname());
+            }
+            if (updateStudent.getImage() != null) {
+                existingStudent.setImage(updateStudent.getImage());
             }
             Student output = studentService.save(existingStudent);
             return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDto(output));
