@@ -7,14 +7,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-// import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,7 @@ import se331.rest.lab.util.LabMapper;
 
 @Controller
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8080")
 public class AdvisorController {
     final AdvisorService advisorService;
 
@@ -60,6 +60,32 @@ public class AdvisorController {
     public ResponseEntity<?> addAdvisor(@RequestBody Advisor advisor) {
         Advisor output = advisorService.save(advisor);
         return ResponseEntity.ok(LabMapper.INSTANCE.getAdvisorDto(output));
+    }
+
+    @PutMapping("/advisors/{id}")
+    public ResponseEntity<?> updateAdvisor(@PathVariable("id") Long id, @RequestBody Advisor updateAdvisor) {
+        Advisor existingAdvisor = advisorService.getEvent(id);
+        if (existingAdvisor != null) {
+            if (updateAdvisor.getName() != null) {
+                existingAdvisor.setName(updateAdvisor.getName());
+            }
+            if (updateAdvisor.getSurname() != null) {
+                existingAdvisor.setSurname(updateAdvisor.getSurname());
+            }
+            if (updateAdvisor.getDepartment() != null) {
+                existingAdvisor.setDepartment(updateAdvisor.getDepartment());
+            }
+            if (updateAdvisor.getSurname() != null) {
+                existingAdvisor.setSurname(updateAdvisor.getSurname());
+            }
+            if (updateAdvisor.getPosition() != null) {
+                existingAdvisor.setPosition(updateAdvisor.getPosition());
+            }
+            Advisor output = advisorService.save(existingAdvisor);
+            return ResponseEntity.ok(LabMapper.INSTANCE.getAdvisorDto(output));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
+        }
     }
 
 }
