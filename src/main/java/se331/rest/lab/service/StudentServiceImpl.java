@@ -1,6 +1,7 @@
 package se331.rest.lab.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Page<Student> getStudents(Integer pageSize, Integer page) {
-        return studentDao.getEStudents(pageSize, page);
+        return studentDao.getStudents(pageSize, page);
     }
 
     @Override
-    public Student getStudent(Long id) {
-        return studentDao.getStudent(id);
+    public Student getStudentById(Long id) {
+        return studentDao.getStudentById(id);
+    }
+
+    @Override
+    public Page<Student> getStudent(String name, Pageable pageable) {
+        return studentDao.getStudent(name, pageable);
     }
 
     @Override

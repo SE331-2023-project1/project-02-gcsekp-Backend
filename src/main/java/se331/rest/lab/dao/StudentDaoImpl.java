@@ -3,6 +3,7 @@ package se331.rest.lab.dao;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Page<Student> getEStudents(Integer pageSize, Integer page) {
+    public Page<Student> getStudents(Integer pageSize, Integer page) {
         long totalEvents = studentRepository.count();
         pageSize = pageSize == null ? (int) totalEvents : pageSize;
         page = page == null ? 0 : page - 1;
@@ -29,13 +30,20 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student getStudent(Long id) {
+    public Student getStudentById(Long id) {
         return studentRepository.findById(id).orElse(null);
     }
 
     @Override
     public Student save(Student student) {
         return studentRepository.save(student);
+    }
+
+    @Override
+    public Page<Student> getStudent(String name, Pageable page) {
+        return studentRepository
+                .findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrStudentIDOrAdvisor_NameContainingIgnoreCase(
+                        name, name, name, name, page);
     }
 
 }

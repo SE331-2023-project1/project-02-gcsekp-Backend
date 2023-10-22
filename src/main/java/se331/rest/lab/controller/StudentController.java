@@ -1,6 +1,7 @@
 package se331.rest.lab.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,20 @@ public class StudentController {
 
     @GetMapping("students")
     public ResponseEntity<?> getAdvisorLists(@RequestParam(value = "_limit", required = false) Integer perPage,
-            @RequestParam(value = "_page", required = false) Integer page) {
-        Page<Student> pageOutput = studentService.getStudents(perPage, page);
+            // @RequestParam(value = "_page", required = false) Integer page) {
+            // Page<Student> pageOutput = studentService.getStudents(perPage, page);
+            // Search function
+            @RequestParam(value = "_page", required = false) Integer page,
+            @RequestParam(value = "title", required = false) String title) {
+        perPage = perPage == null ? 3 : perPage;
+        page = page == null ? 1 : page;
+        Page<Student> pageOutput;
+        if (title == null) {
+            pageOutput = studentService.getStudents(perPage, page);
+        } else {
+            pageOutput = studentService.getStudent(title, PageRequest.of(page - 1, perPage));
+        }
+
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(LabMapper.INSTANCE.getStudentDto(pageOutput.getContent()), responseHeaders,
@@ -32,7 +45,7 @@ public class StudentController {
 
     @GetMapping("students/{id}")
     public ResponseEntity<?> getEvent(@PathVariable("id") Long id) {
-        Student output = studentService.getStudent(id);
+        Student output = studentService.getStudentById(id);
         if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDto(output));
         } else {
