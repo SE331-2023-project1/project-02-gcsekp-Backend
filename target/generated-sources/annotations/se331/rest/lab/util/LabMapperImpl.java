@@ -12,7 +12,7 @@ import se331.rest.lab.entity.Student;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-22T22:10:56+0700",
+    date = "2023-10-22T22:45:45+0700",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.4.1 (Amazon.com Inc.)"
 )
 public class LabMapperImpl implements LabMapper {
