@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import se331.rest.lab.service.AdvisorService;
+import se331.rest.lab.util.LabMapper;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,14 +26,15 @@ public class AdvisorController {
         Page<Advisor> pageOutput = advisorService.getAdvisors(perPage, page);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent(), responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(LabMapper.INSTANCE.getAdvisorDto(pageOutput.getContent()), responseHeaders,
+                HttpStatus.OK);
     }
 
     @GetMapping("advisors/{id}")
     public ResponseEntity<?> getEvent(@PathVariable("id") Long id) {
         Advisor output = advisorService.getEvent(id);
         if (output != null) {
-            return ResponseEntity.ok(output);
+            return ResponseEntity.ok(LabMapper.INSTANCE.getAdvisorDto(output));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "the given id is not found");
         }
