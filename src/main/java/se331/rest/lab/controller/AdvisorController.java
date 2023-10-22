@@ -2,6 +2,7 @@ package se331.rest.lab.controller;
 
 import org.springframework.aop.Advisor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,17 @@ public class AdvisorController {
 
     @GetMapping("advisors")
     public ResponseEntity<?> getAdvisorLists(@RequestParam(value = "_limit", required = false) Integer perPage,
-            @RequestParam(value = "_page", required = false) Integer page) {
-        Page<Advisor> pageOutput = advisorService.getAdvisors(perPage, page);
+            @RequestParam(value = "_page", required = false) Integer page,
+            @RequestParam(value = "title", required = false) String title) {
+        perPage = perPage == null ? 6 : perPage;
+        page = page == null ? 1 : page;
+        Page<Advisor> pageOutput;
+        if (title == null) {
+            pageOutput = advisorService.getAdvisors(perPage, page);
+        } else {
+            pageOutput = advisorService.getAdvisor(title, PageRequest.of(page - 1, perPage));
+        }
+
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(LabMapper.INSTANCE.getAdvisorDto(pageOutput.getContent()), responseHeaders,

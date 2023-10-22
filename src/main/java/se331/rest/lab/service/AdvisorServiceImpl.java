@@ -1,6 +1,7 @@
 package se331.rest.lab.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class AdvisorServiceImpl implements AdvisorService {
 
     @Override
     public Advisor getEvent(Long id) {
-        return advisorDao.getAdvisor(id);
+        return advisorDao.getAdvisorById(id);
     }
 
     @Override
@@ -32,6 +33,11 @@ public class AdvisorServiceImpl implements AdvisorService {
     @Override
     public Advisor getAdvisorById(Long id) {
         return advisorDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Advisor> getAdvisor(String name, Pageable page) {
+        return advisorDao.getAdvisor(name, page);
     }
 
 }
