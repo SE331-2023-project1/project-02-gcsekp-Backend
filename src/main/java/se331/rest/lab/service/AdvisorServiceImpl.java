@@ -2,6 +2,7 @@ package se331.rest.lab.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import se331.rest.lab.dao.AdvisorDao;
@@ -23,8 +24,14 @@ public class AdvisorServiceImpl implements AdvisorService {
     }
 
     @Override
+    @Transactional
     public Advisor save(Advisor advisor) {
         return advisorDao.save(advisor);
+    }
+
+    @Override
+    public Advisor getAdvisorById(Long id) {
+        return advisorDao.findById(id).orElse(null);
     }
 
 }

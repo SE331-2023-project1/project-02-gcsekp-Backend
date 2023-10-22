@@ -16,9 +16,10 @@ public class AdvisorDTO {
     Long id;
     String name;
     String surname;
-    String image;
+    List<String> image;
     String department;
     String advisorID;
+    StudentDTO student;
     List<OwnStudentDTO> studentList = new ArrayList<>();
 
 }

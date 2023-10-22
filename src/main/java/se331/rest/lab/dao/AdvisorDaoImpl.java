@@ -1,5 +1,7 @@
 package se331.rest.lab.dao;
 
+import java.util.Optional;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +14,6 @@ import se331.rest.lab.repository.AdvisorRepository;
 @Repository
 @RequiredArgsConstructor
 @Profile("db")
-
 public class AdvisorDaoImpl implements AdvisorDao {
 
     final AdvisorRepository advisorRepository;
@@ -38,6 +39,11 @@ public class AdvisorDaoImpl implements AdvisorDao {
     @Override
     public Advisor save(Advisor advisor) {
         return advisorRepository.save(advisor);
+    }
+
+    @Override
+    public Optional<Advisor> findById(Long id) {
+        return advisorRepository.findById(id);
     }
 
 }

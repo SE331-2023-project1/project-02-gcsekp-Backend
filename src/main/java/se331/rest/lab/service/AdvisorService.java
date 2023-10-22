@@ -11,4 +11,6 @@ public interface AdvisorService {
 
     Advisor save(Advisor advisor);
 
+    Advisor getAdvisorById(Long id);
+
 }
