@@ -16,6 +16,6 @@ public class StudentDTO {
     String position;
     String image;
     String department;
-    StudentDTO student;
+    OwnsAdvisorDTO advisor;
 
 }

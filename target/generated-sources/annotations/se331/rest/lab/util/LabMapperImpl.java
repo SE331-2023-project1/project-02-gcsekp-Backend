@@ -12,7 +12,7 @@ import se331.rest.lab.entity.Student;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-22T17:37:55+0700",
+    date = "2023-10-22T17:43:22+0700",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.4.1 (Amazon.com Inc.)"
 )
 public class LabMapperImpl implements LabMapper {
@@ -25,6 +25,7 @@ public class LabMapperImpl implements LabMapper {
 
         StudentDTO.StudentDTOBuilder studentDTO = StudentDTO.builder();
 
+        studentDTO.advisor( getAdvisorForStudent( student.getAdvisor() ) );
         studentDTO.department( student.getDepartment() );
         studentDTO.id( student.getId() );
         studentDTO.image( student.getImage() );
@@ -61,6 +62,7 @@ public class LabMapperImpl implements LabMapper {
         advisorDTO.id( advisor.getId() );
         advisorDTO.image( advisor.getImage() );
         advisorDTO.name( advisor.getName() );
+        advisorDTO.studentList( studentListToOwnStudentDTOList( advisor.getStudentList() ) );
         advisorDTO.surname( advisor.getSurname() );
 
         return advisorDTO.build();
@@ -111,5 +113,18 @@ public class LabMapperImpl implements LabMapper {
         ownStudentDTO.setSurname( student.getSurname() );
 
         return ownStudentDTO;
+    }
+
+    protected List<OwnStudentDTO> studentListToOwnStudentDTOList(List<Student> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<OwnStudentDTO> list1 = new ArrayList<OwnStudentDTO>( list.size() );
+        for ( Student student : list ) {
+            list1.add( getStudentForAdvisor( student ) );
+        }
+
+        return list1;
     }
 }
