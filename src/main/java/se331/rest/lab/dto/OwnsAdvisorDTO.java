@@ -16,5 +16,6 @@ public class OwnsAdvisorDTO {
     String surname;
     String department;
     String position;
+    String advisorID;
 
 }

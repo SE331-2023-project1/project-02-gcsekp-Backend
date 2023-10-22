@@ -11,6 +11,6 @@ import se331.rest.lab.entity.Advisor;
 public interface AdvisorRepository extends JpaRepository<Advisor, Long> {
     List<Advisor> findAll();
 
-    Page<Advisor> findByNameContainingIgnoreCase(String name, Pageable pageable);
+    Page<Advisor> findByNameContainingIgnoreCaseOrAdvisorID(String name, String advisorID, Pageable pageable);
 
 }
