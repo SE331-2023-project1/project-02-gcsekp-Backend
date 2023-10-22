@@ -1,5 +1,8 @@
 package se331.rest.lab.entity;
 
+import java.util.List;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,9 +27,12 @@ public class Student {
     String studentID;
     String name;
     String surname;
-    String image;
+
     String department;
     @ManyToOne
     Advisor advisor;
+
+    @ElementCollection
+    List<String> image;
 
 }

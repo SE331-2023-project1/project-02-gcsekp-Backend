@@ -1,5 +1,7 @@
 package se331.rest.lab.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +16,9 @@ public class StudentDTO {
     String name;
     String surname;
     String position;
-    String image;
+
     String department;
     OwnsAdvisorDTO advisor;
+    List<String> image;
 
 }
