@@ -10,6 +10,7 @@ import java.util.Date;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -19,18 +20,21 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import jakarta.servlet.ServletException;
+import lombok.RequiredArgsConstructor;
 import se331.rest.lab.util.StorageFileDto;
 
 @Component
+@Controller
+@RequiredArgsConstructor
 public class BucketController {
     private static Storage storage = null;
     static {
         InputStream serviceAccount = null;
         try {
-            serviceAccount = new ClassPathResource("projectstorage-165a3-9c9b4a30e880.json").getInputStream();
+            serviceAccount = new ClassPathResource("imageupload-4b2c0.json").getInputStream();
             storage = (Storage) StorageOptions.newBuilder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setProjectId("projectstorage-165a3")
+                    .setProjectId("imageupload-4b2c0")
                     .build().getService();
         } catch (IOException e) {
             e.printStackTrace();
