@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 
 import se331.rest.lab.entity.Advisor;
 
-public class AdvisorDao {
+public interface AdvisorDao {
     Integer getAdvisorSize();
 
     Page<Advisor> getAdvisors(Integer pageSize, Integer page);

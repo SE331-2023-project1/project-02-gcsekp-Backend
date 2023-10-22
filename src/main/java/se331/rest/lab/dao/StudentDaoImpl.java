@@ -12,7 +12,7 @@ import se331.rest.lab.repository.StudentRepository;
 @Repository
 @RequiredArgsConstructor
 @Profile("db")
-public class StudentDaoImpl {
+public class StudentDaoImpl implements StudentDao {
     final StudentRepository studentRepository;
 
     @Override

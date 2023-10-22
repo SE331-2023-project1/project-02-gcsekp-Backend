@@ -9,7 +9,7 @@ import se331.rest.lab.entity.Advisor;
 
 @Service
 @RequiredArgsConstructor
-public class AdvisorServiceImpl {
+public class AdvisorServiceImpl implements AdvisorService {
     final AdvisorDao advisorDao;
 
     @Override

@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 
 import se331.rest.lab.entity.Student;
 
-public class StudentDao {
+public interface StudentDao {
     Integer getStudentSize();
 
     Page<Student> getEStudents(Integer pageSize, Integer page);

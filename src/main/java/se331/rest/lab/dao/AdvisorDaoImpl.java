@@ -13,7 +13,7 @@ import se331.rest.lab.repository.AdvisorRepository;
 @RequiredArgsConstructor
 @Profile("db")
 
-public class AdvisorDaoImpl {
+public class AdvisorDaoImpl implements AdvisorDao {
 
     final AdvisorRepository advisorRepository;
 
