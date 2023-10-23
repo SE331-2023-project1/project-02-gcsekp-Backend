@@ -42,8 +42,9 @@ public class User implements UserDetails {
     @GeneratedValue
     private Integer id;
     private String parentId;
-    private String firstname;
-    private String lastname;
+    private String studentID;
+    private String name;
+    private String surname;
     @Column(unique = true)
     private String username;
     private String email;
