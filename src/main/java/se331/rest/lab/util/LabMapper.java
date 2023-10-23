@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.web.bind.annotation.Mapping;
 
 import se331.rest.lab.dto.AdvisorDTO;
 import se331.rest.lab.dto.OwnStudentDTO;
@@ -27,4 +28,10 @@ public interface LabMapper {
     OwnsAdvisorDTO getAdvisorForStudent(Advisor advisor);
 
     OwnStudentDTO getStudentForAdvisor(Student student);
+
+    @Mapping(target = "roles", source = "user.roles")
+    AdvisorAuthDTO getAdvisorAuthDTO(Advisor advisor);
+
+    @Mapping(target = "roles", source = "user.roles")
+    StudentAuthDTO getStudentAuthDTO(Student student);
 }

@@ -357,7 +357,7 @@ public class InitApp {
 
         }
 
-        User user1;
+        User user1, user2;
 
         private void addUser() {
                 PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -371,9 +371,22 @@ public class InitApp {
                                 .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
                                                 .atStartOfDay(ZoneId.systemDefault()).toInstant()))
                                 .build();
-
                 user1.getRoles().add(Role.ROLE_ADMIN);
                 userRepository.save(user1);
+
+                user2 = User.builder()
+                                .username("advisor")
+                                .password(encoder.encode("advisor"))
+                                .firstname("advisor")
+                                .lastname("advisor")
+                                .email("advisor@user.com")
+                                .enabled(true)
+                                .lastPasswordResetDate(Date.from(LocalDate.of(2021, 01, 01)
+                                                .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                                .build();
+
+                user2.getRoles().add(Role.ROLE_ADVISOR);
+                userRepository.save(user2);
         }
 
 }
