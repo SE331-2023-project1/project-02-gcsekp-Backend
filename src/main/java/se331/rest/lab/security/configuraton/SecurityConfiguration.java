@@ -1,7 +1,10 @@
 package se331.rest.lab.security.configuraton;
 
+import static org.springframework.security.config.Customizer.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,7 +35,20 @@ public class SecurityConfiguration {
                 .csrf((crsf) -> crsf.disable())
                 .authorizeHttpRequests((authorize) -> {
 
-                    authorize.requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated();
+                    // authorize.requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated();
+                    authorize.requestMatchers("/api/v1/auth/**").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/students").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/advisors").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/advisors/**").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/students/**").permitAll()
+                            .requestMatchers(HttpMethod.PUT, "/students/**").permitAll()
+                            .requestMatchers(HttpMethod.PUT, "/advisors/**").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/advisors").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/uploadImage").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/uploadFile").permitAll()
+
+                            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                            .anyRequest().authenticated();
                 })
 
                 .sessionManagement((session) -> {
@@ -47,7 +63,7 @@ public class SecurityConfiguration {
                     logout.logoutSuccessHandler(
                             (request, response, authentication) -> SecurityContextHolder.clearContext());
                 });
-
+        http.cors(withDefaults());
         return http.build();
 
     }
