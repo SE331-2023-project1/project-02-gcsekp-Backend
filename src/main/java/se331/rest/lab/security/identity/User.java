@@ -2,6 +2,7 @@ package se331.rest.lab.security.identity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,8 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
+    private Boolean enabled;
+    private Date lastPasswordResetDate;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection
