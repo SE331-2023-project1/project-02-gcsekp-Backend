@@ -20,11 +20,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se331.rest.lab.entity.Advisor;
+import se331.rest.lab.entity.Student;
 import se331.rest.lab.security.authorization.Token;
 
 @Data
@@ -47,6 +50,7 @@ public class User implements UserDetails {
     private String password;
     private Boolean enabled;
     private Date lastPasswordResetDate;
+    private String studentId;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection
@@ -56,6 +60,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+    @OneToOne(mappedBy = "user")
+    Advisor advisor;
+    @OneToOne(mappedBy = "user")
+    Student student;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
