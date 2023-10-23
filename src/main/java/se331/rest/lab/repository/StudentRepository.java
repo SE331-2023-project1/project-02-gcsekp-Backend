@@ -11,7 +11,7 @@ import se331.rest.lab.entity.Student;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAll();
 
-    Page<Student> findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrStudentIDOrAdvisor_NameContainingIgnoreCase(
-            String name, String surName, String studentID, Pageable PageRequest);
+    Page<Student> findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrStudentID(String name, String surName,
+            String studentID, Pageable PageRequest);
 
 }

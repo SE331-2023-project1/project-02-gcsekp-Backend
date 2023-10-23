@@ -16,7 +16,7 @@ import se331.rest.lab.security.identity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-23T13:19:45+0700",
+    date = "2023-10-23T18:11:23+0700",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.4.1 (Amazon.com Inc.)"
 )
 public class LabMapperImpl implements LabMapper {
@@ -37,6 +37,7 @@ public class LabMapperImpl implements LabMapper {
             studentDTO.image( new ArrayList<String>( list ) );
         }
         studentDTO.name( student.getName() );
+        studentDTO.studentID( student.getStudentID() );
         studentDTO.surname( student.getSurname() );
 
         return studentDTO.build();

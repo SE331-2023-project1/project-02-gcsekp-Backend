@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ import se331.rest.lab.security.identity.UserRepository;
 
 @Component
 @RequiredArgsConstructor
-public class InitApp {
+public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         final AdvisorRepository advisorRepository;
         final StudentRepository studentRepository;
         final UserRepository userRepository;
@@ -366,9 +367,9 @@ public class InitApp {
 
         User user1, user2, user3;
 
-        // ================================================================================================================================
         private void addUser() {
                 PasswordEncoder encoder = new BCryptPasswordEncoder();
+                // ================================================================================================================================
                 user1 = User.builder()
                                 .username("admin")
                                 .password(encoder.encode("admin"))

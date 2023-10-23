@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudentDTO {
     Long id;
+    String studentID;
     String name;
     String surname;
-    String position;
-
     String department;
     OwnsAdvisorDTO advisor;
     List<String> image;

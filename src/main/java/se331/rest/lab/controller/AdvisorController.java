@@ -1,6 +1,5 @@
 package se331.rest.lab.controller;
 
-import org.springframework.aop.Advisor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
+import se331.rest.lab.entity.Advisor;
 import se331.rest.lab.service.AdvisorService;
 import se331.rest.lab.util.LabMapper;
 
@@ -38,7 +38,6 @@ public class AdvisorController {
         } else {
             pageOutput = advisorService.getAdvisor(title, PageRequest.of(page - 1, perPage));
         }
-
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(LabMapper.INSTANCE.getAdvisorDto(pageOutput.getContent()), responseHeaders,
@@ -48,6 +47,7 @@ public class AdvisorController {
     @GetMapping("advisors/{id}")
     public ResponseEntity<?> getEvent(@PathVariable("id") Long id) {
         Advisor output = advisorService.getEvent(id);
+
         if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getAdvisorDto(output));
         } else {
@@ -55,7 +55,6 @@ public class AdvisorController {
         }
     }
 
-    // add advisor backend
     @PostMapping("/advisors")
     public ResponseEntity<?> addAdvisor(@RequestBody Advisor advisor) {
         Advisor output = advisorService.save(advisor);
@@ -87,5 +86,4 @@ public class AdvisorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
     }
-
 }

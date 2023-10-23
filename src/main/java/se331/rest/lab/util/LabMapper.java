@@ -37,10 +37,4 @@ public interface LabMapper {
 
     @Mapping(target = "roles", source = "user.roles")
     StudentAuthDTO getStudentAuthDTO(Student student);
-
-    @Mapping(target = "roles", source = "user.roles")
-    AdvisorAuthDTO getAdvisorAuthDTO(Advisor advisor);
-
-    @Mapping(target = "roles", source = "user.roles")
-    StudentAuthDTO getStudentAuthDTO(Student student);
 }

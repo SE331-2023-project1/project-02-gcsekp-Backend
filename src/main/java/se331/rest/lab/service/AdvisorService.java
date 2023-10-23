@@ -11,10 +11,9 @@ public interface AdvisorService {
 
     Advisor getEvent(Long id);
 
-    Advisor save(Advisor advisor);
-
     Advisor getAdvisorById(Long id);
 
-    Page<Advisor> getAdvisor(String name, Pageable page);
+    Advisor save(Advisor advisor);
 
+    Page<Advisor> getAdvisor(String name, Pageable page);
 }

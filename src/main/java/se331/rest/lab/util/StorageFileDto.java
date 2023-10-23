@@ -1,7 +1,6 @@
 package se331.rest.lab.util;
 
-import com.google.auto.value.AutoValue.Builder;
-
+import lombok.Builder;
 import lombok.Data;
 
 @Data

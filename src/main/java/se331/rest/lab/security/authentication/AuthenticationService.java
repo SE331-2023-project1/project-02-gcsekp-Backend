@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import se331.rest.lab.entity.Advisor;
 import se331.rest.lab.entity.Student;
+import se331.rest.lab.repository.AdvisorRepository;
+import se331.rest.lab.repository.StudentRepository;
 import se331.rest.lab.security.authorization.Token;
 import se331.rest.lab.security.authorization.TokenRepository;
 import se331.rest.lab.security.authorization.TokenType;
@@ -33,6 +35,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final AdvisorRepository advisorRepository;
+    private final StudentRepository studentRepository;
 
     public AuthenticationResponse registerStudent(RegisterRequest request) {
         Student student = Student.builder()
@@ -41,9 +45,7 @@ public class AuthenticationService {
                 .surname(request.getSurname())
                 .id(studentRepository.count() + 1)
                 .build();
-
         User user = User.builder()
-                .studentID(request.getStudentID())
                 .name(request.getName())
                 .surname(request.getSurname())
                 .email(request.getEmail())
@@ -74,7 +76,6 @@ public class AuthenticationService {
                 .surname(request.getSurname())
                 .id(advisorRepository.count() + 1)
                 .build();
-
         User user = User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
@@ -110,11 +111,7 @@ public class AuthenticationService {
         String refreshToken = jwtService.generateRefreshToken(user);
         // revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        // return AuthenticationResponse.builder()
-        // .accessToken(jwtToken)
-        // .refreshToken(refreshToken)
-        // .build();
-        // }
+
         if (user.getRoles().equals("ROLE_STUDENT")) {
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
@@ -132,6 +129,7 @@ public class AuthenticationService {
 
     private void saveUserToken(User user, String jwtToken) {
         Token token = Token.builder()
+
                 .user(user)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
@@ -170,7 +168,7 @@ public class AuthenticationService {
                 String accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
-                AuthenticationResponse authResponse = AuthenticationResponse.builder()
+                AuthenticationResponseAdvisor authResponse = AuthenticationResponseAdvisor.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();

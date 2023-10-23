@@ -3,7 +3,7 @@ spring:
     active:
       - db
   datasource:
-    url: jdbc:mysql://localhost:3307/project2db?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3309/project02db?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: password
@@ -13,11 +13,10 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-
 application:
   security:
     jwt:
       expiration: 86400000 # 86400000 # a day
-      secret-key: JBAPhjnzukkT3WlEWa2V7itahxD3QE+KnZc3azNdrrQnyGolUKhQVZYgO5vkxo2/tDuK2hDHLFiTH6qF2FQmIg==
+      secret-key: acc2115a8ef11803f3998a3218d9bf851b16e0663e5ae43d07ac6ef338e4df14
       refresh-token:
         expiration: 604800000 # 7 days
