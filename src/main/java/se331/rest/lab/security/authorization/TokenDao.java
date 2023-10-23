@@ -1,5 +1,6 @@
 package se331.rest.lab.security.authorization;
 
-public class TokenDao {
+public interface TokenDao {
+    void save(Token token);
 
 }
