@@ -20,6 +20,7 @@ public class AdvisorDTO {
     String department;
     String advisorID;
     StudentDTO student;
+    @Builder.Default
     List<OwnStudentDTO> studentList = new ArrayList<>();
 
 }

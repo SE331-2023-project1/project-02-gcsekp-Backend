@@ -16,5 +16,6 @@ import se331.rest.lab.security.identity.Role;
 public class AdvisorAuthDTO {
     Long id;
     String name;
+    @Builder.Default
     List<Role> roles = new ArrayList<>();
 }
