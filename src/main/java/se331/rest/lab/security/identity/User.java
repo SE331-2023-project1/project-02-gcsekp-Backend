@@ -50,7 +50,6 @@ public class User implements UserDetails {
     private String password;
     private Boolean enabled;
     private Date lastPasswordResetDate;
-    private String studentId;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection
