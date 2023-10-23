@@ -1,5 +1,26 @@
 package se331.rest.lab.security.identity;
 
-public class UserServiceImpl {
+import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    final UserDao userDao;
+
+    @Override
+    @Transactional
+    public User save(User user) {
+        return userDao.save(user);
+    }
+
+    @Override
+    @Transactional
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
+    }
 }
