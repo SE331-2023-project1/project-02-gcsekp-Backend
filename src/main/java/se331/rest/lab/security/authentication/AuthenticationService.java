@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import se331.rest.lab.entity.Advisor;
+import se331.rest.lab.entity.Student;
 import se331.rest.lab.security.authorization.Token;
 import se331.rest.lab.security.authorization.TokenRepository;
 import se331.rest.lab.security.authorization.TokenType;
@@ -21,6 +23,7 @@ import se331.rest.lab.security.configuraton.JwtService;
 import se331.rest.lab.security.identity.Role;
 import se331.rest.lab.security.identity.User;
 import se331.rest.lab.security.identity.UserRepository;
+import se331.rest.lab.util.LabMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -31,21 +34,56 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse registerStudent(RegisterRequest request) {
+        Student student = Student.builder().name(request.getUsername()).id(studentRepository.count() + 1)
+                .studentID(request.getStudentId()).build();
+
         User user = User.builder()
+                .studentId(request.getStudentId())
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
+                .username(request.getUsername())
+                .student(student)
                 .password(passwordEncoder.encode(request.getPassword()))
-                .roles(List.of(Role.ROLE_DISTRIBUTOR))
+                .roles(List.of(Role.ROLE_STUDENT))
                 .build();
+        studentRepository.save(student);
         var savedUser = repository.save(user);
+        student.setUser(user);
+        studentRepository.save(student);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .student(LabMapper.INSTANCE.getStudentAuthDTO(user.getStudent()))
+                .build();
+    }
+
+    public AuthenticationResponseAdvisor registerAdvisor(RegisterRequest request) {
+        Advisor advisor = Advisor.builder().name(request.getUsername()).id(advisorRepository.count() + 1).build();
+        User user = User.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .username(request.getUsername())
+                .advisor(advisor)
+                .password(passwordEncoder.encode(request.getPassword()))
+                .roles(List.of(Role.ROLE_ADVISOR))
+                .build();
+        advisorRepository.save(advisor);
+        var savedUser = repository.save(user);
+        advisor.setUser(user);
+        advisorRepository.save(advisor);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(savedUser, jwtToken);
+        return AuthenticationResponseAdvisor.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .advisor(LabMapper.INSTANCE.getAdvisorAuthDTO(user.getAdvisor()))
                 .build();
     }
 
@@ -61,10 +99,24 @@ public class AuthenticationService {
         String refreshToken = jwtService.generateRefreshToken(user);
         // revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        // return AuthenticationResponse.builder()
+        // .accessToken(jwtToken)
+        // .refreshToken(refreshToken)
+        // .build();
+        // }
+        if (user.getRoles().equals("ROLE_STUDENT")) {
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .student(LabMapper.INSTANCE.getStudentAuthDTO(user.getStudent()))
+                    .build();
+        } else {
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .advisor(LabMapper.INSTANCE.getAdvisorAuthDTO(user.getAdvisor()))
+                    .build();
+        }
     }
 
     private void saveUserToken(User user, String jwtToken) {
