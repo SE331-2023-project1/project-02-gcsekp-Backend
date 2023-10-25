@@ -40,7 +40,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                                 .position("Lecturer")
                                 .advisorID("A001")
                                 .image(List.of(
-                                                "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"))
+                                                "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"))
                                 .build());
                 advisor2 = advisorRepository.save(Advisor.builder()
                                 .name("Ahmed")
