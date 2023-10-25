@@ -16,7 +16,7 @@ import se331.rest.lab.security.identity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-25T08:33:02+0700",
+    date = "2023-10-25T08:45:15+0700",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.4.1 (Amazon.com Inc.)"
 )
 public class LabMapperImpl implements LabMapper {
